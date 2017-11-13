@@ -211,6 +211,11 @@ public class ApplicationController {
     cbInvokeMethod.setVisible(true);
     fldArguments.setVisible(true);
     btnExecute.setVisible(true);
+
+    lblChangeHierarchy.setVisible(false);
+    lblSuperclass.setVisible(false);
+    cbSuperclass.setVisible(false);
+    btnSuperclass.setVisible(false);
   }
 
   @FXML
@@ -247,7 +252,20 @@ public class ApplicationController {
 
   @FXML
   private void onBtnSuperclassClick(ActionEvent event) {
+    String childClassString = cbChooseClass.getValue();
+    String parentClassString = cbSuperclass.getValue();
 
+    try {
+      CtClass childCtClass = classPool.get(childClassString);
+      CtClass parentCtClass = classPool.get(parentClassString);
+
+      childCtClass.setSuperclass(parentCtClass);
+      childCtClass.writeFile();
+
+      Utils.showAlert(Alert.AlertType.INFORMATION, "Dokonano zmiany hierarchii dziedziczenie klasy " + childCtClass.getSimpleName() + ".");
+    } catch (IOException | CannotCompileException | NotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   static FileChooser getChooser() {
