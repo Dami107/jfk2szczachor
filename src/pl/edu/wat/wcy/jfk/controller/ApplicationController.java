@@ -183,20 +183,6 @@ public class ApplicationController {
 
   @FXML
   private void onCbInvokeMethod(ActionEvent event) {
-    CtClass ctClass = null;
-    try {
-      ctClass = classPool.getCtClass(cbInvokeClass.getValue());
-    } catch (NotFoundException e) {
-      Alert alert = new Alert(Alert.AlertType.ERROR, "Błąd odczytu klasy.");
-      alert.show();
-      e.printStackTrace();
-
-      return;
-    }
-
-    Class clazz = ClassMapper.getInstance().getClass(ctClass);
-
-//    Object instance = clazz.newInstance();
 
   }
 

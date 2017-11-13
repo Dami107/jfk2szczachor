@@ -2,9 +2,6 @@ package pl.edu.wat.wcy.jfk.controller;
 
 import javafx.scene.control.Alert;
 import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.NotFoundException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,10 +19,13 @@ public class MethodInvoker {
     String[] parameters = getMethodParameters(methodString);
     String[] arguments = splitArguments(argumentsString);
 
+    if (parameters.length != arguments.length) {
+      Utils.showAlert(Alert.AlertType.ERROR, "Wywołanie tej metody wymaga podania " + parameters.length + " argumentów.");
+      return;
+    }
 
     Method method = getMethod(clazz, name, parameters);
     Object[] objectArguments = convertToObjectParams(arguments, method.getParameterTypes());
-
 
     Object result = null;
 
@@ -51,7 +51,6 @@ public class MethodInvoker {
   }
 
   private String[] getMethodParameters(String method) {
-    System.out.println("method = " + method + "; indexOf1 = " + method.indexOf("(") + "; indexOf2 = " + method.indexOf(")"));
 
     String parametersStr = method.substring(method.indexOf("(") + 1, method.indexOf(")"));
 
@@ -60,21 +59,6 @@ public class MethodInvoker {
     }
 
     String[] parameters = parametersStr.split(", ");
-
-    System.out.println("parametersStr = " + parametersStr);
-    for (String param : parameters) {
-      System.out.println("param = " + param);
-    }
-
-//    String[] parameterStr = arguments.split(" ");
-//    Object[] parameters = new Object[parameterStr.length];
-//
-//    for (int i = 0; i < parameterStr.length; i++) {
-//      parameters[i] = CastHelper.cast(parameterStr[i], )
-//    }
-//
-//    return null;
-
     return parameters;
   }
 
@@ -82,7 +66,6 @@ public class MethodInvoker {
     Method[] methods = clazz.getMethods();
 
     for (Method method : methods) {
-      System.out.println("method name = " + method.getName() + "; from param = " + methodName);
       if (method.getName().equals(methodName)) {
         Class[] parameters = method.getParameterTypes();
 
@@ -96,14 +79,11 @@ public class MethodInvoker {
   }
 
   private boolean isParamsSameType(Class[] params, String[] methodParams) {
-    System.out.println("parameters length = " + params.length + "; methodParameters.length = " + methodParams.length);
     if (params.length != methodParams.length) {
       return false;
     }
 
     for (int i = 0; i < params.length; i++) {
-      System.out.println("idx = " + i + "; parameters  = " + params[i] + "; methodParams = " + methodParams[i]);
-
       if (!params[i].getName().equals(methodParams[i])) {
         return false;
       }
@@ -122,7 +102,6 @@ public class MethodInvoker {
   }
 
   private Object[] convertToObjectParams(String[] stringParams, Class[] paramClasses) {
-    System.out.println("stringParams lenght = " + stringParams.length + "; paramClasses length = " + paramClasses.length);
 
     Object[] objectParams = new Object[stringParams.length];
 
@@ -131,28 +110,6 @@ public class MethodInvoker {
     }
 
     return objectParams;
-  }
-
-  public void test(CtClass ctClass) {
-    while (ctClass != null) {
-      CtMethod[] methods = ctClass.getDeclaredMethods();
-      for (CtMethod method : methods) {
-        System.out.println("Current method = " + method.getName());
-
-        try {
-          for (CtClass ctClass1 : method.getParameterTypes()) {
-            System.out.println("Current parameter = " + ctClass1.getName());
-          }
-        } catch (NotFoundException e) {
-          e.printStackTrace();
-        }
-      }
-      try {
-        ctClass = ctClass.getSuperclass();
-      } catch (NotFoundException e) {
-        e.printStackTrace();
-      }
-    }
   }
 
   public ClassPool getClassPool() {
