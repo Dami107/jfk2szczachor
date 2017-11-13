@@ -46,6 +46,9 @@ public class ApplicationController {
   private Button btnEndEdit;
 
   @FXML
+  private Label lblAddMethod;
+
+  @FXML
   private Label lblMethodSignature;
 
   @FXML
@@ -106,6 +109,7 @@ public class ApplicationController {
       return;
     }
 
+    lblAddMethod.setVisible(true);
     btnEndEdit.setVisible(true);
     lblMethodSignature.setVisible(true);
     lblMethodBody.setVisible(true);
@@ -143,10 +147,9 @@ public class ApplicationController {
       Utils.showAlert(Alert.AlertType.INFORMATION, "Dodano metodę " + ctMethod.getName() + " do klasy " + ctClass.getName());
 
     } catch (CannotCompileException e) {
-      Utils.showAlert(Alert.AlertType.ERROR, "Wystąpił błąd podczas dodawania metody.");
+      Utils.showAlert(Alert.AlertType.ERROR, "Wystąpił błąd podczas dodawania metody.\n" + e.getLocalizedMessage());
       e.printStackTrace();
     }
-
 
     fldMethodSignature.clear();
     fldMethodBody.clear();
@@ -160,6 +163,9 @@ public class ApplicationController {
       return;
     }
 
+    cbChooseClass.setDisable(true);
+
+    lblAddMethod.setVisible(false);
     lblMethodSignature.setVisible(false);
     fldMethodSignature.setVisible(false);
     lblMethodBody.setVisible(false);

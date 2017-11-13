@@ -22,7 +22,12 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbChooseClass" layoutX="35.0" layoutY="180.0" onAction="#onCbChooseClass" prefHeight="25.0" prefWidth="170.0" visible="false" />
+      <ComboBox fx:id="cbChooseClass" layoutX="35.0" layoutY="180.0" onAction="#onCbChooseClass" prefHeight="25.0" prefWidth="170.0" promptText="Wybierz klasę..." visible="false" />
+      <Label fx:id="lblAddMethod" layoutX="304.0" layoutY="35.0" prefHeight="30.0" prefWidth="170.0" text="Dodaj metodę" textAlignment="CENTER" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
       <Button fx:id="btnEndEdit" layoutX="434.0" layoutY="272.0" mnemonicParsing="false" onAction="#onBtnEndEditClick" prefHeight="25.0" prefWidth="170.0" text="Zakończ edycję" visible="false" />
       <TextField fx:id="fldMethodSignature" layoutX="434.0" layoutY="70.0" prefHeight="25.0" prefWidth="288.0" visible="false" />
       <Label fx:id="lblMethodSignature" layoutX="304.0" layoutY="68.0" prefHeight="30.0" prefWidth="129.0" text="Sygnatura metody:" textAlignment="CENTER" visible="false">
@@ -42,7 +47,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbInvokeClass" layoutX="27.0" layoutY="305.0" onAction="#onCbInvokeClass" prefHeight="25.0" prefWidth="170.0" promptText="Wybierz klasę...." visible="false" />
+      <ComboBox fx:id="cbInvokeClass" layoutX="27.0" layoutY="305.0" onAction="#onCbInvokeClass" prefHeight="25.0" prefWidth="170.0" promptText="Wybierz klasę..." visible="false" />
       <ComboBox fx:id="cbInvokeMethod" layoutX="27.0" layoutY="339.0" onAction="#onCbInvokeMethod" prefHeight="25.0" prefWidth="170.0" promptText="Wybierz metodę..." visible="false" />
       <TextField fx:id="fldArguments" layoutX="27.0" layoutY="378.0" prefHeight="25.0" prefWidth="170.0" promptText="Argumenty..." visible="false" />
       <Button fx:id="btnExecute" layoutX="27.0" layoutY="421.0" mnemonicParsing="false" onAction="#onBtnExecuteClick" prefHeight="25.0" prefWidth="81.0" text="Wykonaj" visible="false" />
