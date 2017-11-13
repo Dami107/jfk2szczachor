@@ -51,5 +51,17 @@
       <ComboBox fx:id="cbInvokeMethod" layoutX="27.0" layoutY="339.0" onAction="#onCbInvokeMethod" prefHeight="25.0" prefWidth="170.0" promptText="Wybierz metodę..." visible="false" />
       <TextField fx:id="fldArguments" layoutX="27.0" layoutY="378.0" prefHeight="25.0" prefWidth="170.0" promptText="Argumenty..." visible="false" />
       <Button fx:id="btnExecute" layoutX="27.0" layoutY="421.0" mnemonicParsing="false" onAction="#onBtnExecuteClick" prefHeight="25.0" prefWidth="81.0" text="Wykonaj" visible="false" />
+      <Label fx:id="lblChangeHierarchy" layoutX="304.0" layoutY="315.0" prefHeight="30.0" prefWidth="306.0" text="Zmień hierarchię dziedziczenia" textAlignment="CENTER" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbSuperclass" layoutX="450.0" layoutY="353.0" prefHeight="25.0" prefWidth="249.0" promptText="Wybierz klasę..." visible="false" />
+      <Label fx:id="lblSuperclass" layoutX="304.0" layoutY="350.0" prefHeight="30.0" prefWidth="129.0" text="Klasa nadrzędna:" textAlignment="CENTER" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSuperclass" layoutX="586.0" layoutY="391.0" mnemonicParsing="false" onAction="#onBtnSuperclassClick" prefHeight="25.0" prefWidth="113.0" text="Zatwierdź" visible="false" />
    </children>
 </AnchorPane>

@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -79,6 +80,18 @@ public class ApplicationController {
   private Button btnExecute;
 
   @FXML
+  private Label lblChangeHierarchy;
+
+  @FXML
+  private Label lblSuperclass;
+
+  @FXML
+  private ComboBox<String> cbSuperclass;
+
+  @FXML
+  private Button btnSuperclass;
+
+  @FXML
   private void initialize() {
     classPool = ClassPool.getDefault();
     MethodInvoker.getInstance().setClassPool(classPool);
@@ -116,6 +129,26 @@ public class ApplicationController {
     fldMethodSignature.setVisible(true);
     fldMethodBody.setVisible(true);
     btnAddMethod.setVisible(true);
+
+    lblChangeHierarchy.setVisible(true);
+    lblSuperclass.setVisible(true);
+    cbSuperclass.setVisible(true);
+    btnSuperclass.setVisible(true);
+
+    List<String> possibleClasses = getPossibleSuperclasses(cbChooseClass.getValue());
+    cbSuperclass.getItems().clear();
+    cbSuperclass.getItems().addAll(possibleClasses);
+
+    try {
+      CtClass ctClass = classPool.get(cbChooseClass.getValue());
+
+      if (ctClass != null && ctClass.getSuperclass() != null) {
+        cbSuperclass.setValue(ctClass.getSuperclass().getName());
+      }
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+    }
+
   }
 
   @FXML
@@ -212,6 +245,11 @@ public class ApplicationController {
     MethodInvoker.getInstance().invoke(clazz, method, arguments);
   }
 
+  @FXML
+  private void onBtnSuperclassClick(ActionEvent event) {
+
+  }
+
   static FileChooser getChooser() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Wybierz plik .jar");
@@ -301,6 +339,37 @@ public class ApplicationController {
     }
 
     return names;
+  }
+
+  public List<String> getPossibleSuperclasses(String className) {
+    List<String> classes = getClassNames();
+    List<String> impossibleSuperclasses = new LinkedList<>();
+
+    try {
+      for (String clazz : classes) {
+        CtClass ctClass = classPool.get(clazz);
+
+        while (ctClass.getSuperclass() != null) {
+          ctClass = ctClass.getSuperclass();
+
+          if (ctClass.getName().equals(cbChooseClass.getValue())) {
+            impossibleSuperclasses.add(clazz);
+            break;
+          }
+        }
+      }
+
+    } catch (NotFoundException e) {
+      e.printStackTrace();
+    }
+
+    classes.removeAll(impossibleSuperclasses);
+    classes.remove(cbChooseClass.getValue()); //klasa nie może dziedziczyć sama po sobie
+
+    //dirtyfix
+    classes.add("java.lang.Object");
+
+    return classes;
   }
 
   public Stage getStage() {
