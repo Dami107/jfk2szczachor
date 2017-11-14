@@ -37,6 +37,7 @@ public class MethodInvoker {
       }
     } catch (IllegalAccessException | InvocationTargetException e) {
       Utils.showAlert(Alert.AlertType.ERROR, "Wystąpił błąd: " + e.getMessage());
+      e.printStackTrace();
     }
 
     if (result != null) {

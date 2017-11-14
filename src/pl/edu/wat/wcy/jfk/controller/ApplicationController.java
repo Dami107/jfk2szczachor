@@ -262,7 +262,7 @@ public class ApplicationController {
       childCtClass.setSuperclass(parentCtClass);
       childCtClass.writeFile();
 
-      Utils.showAlert(Alert.AlertType.INFORMATION, "Dokonano zmiany hierarchii dziedziczenie klasy " + childCtClass.getSimpleName() + ".");
+      Utils.showAlert(Alert.AlertType.INFORMATION, "Dokonano zmiany hierarchii dziedziczenia klasy " + childCtClass.getSimpleName() + ".");
     } catch (IOException | CannotCompileException | NotFoundException e) {
       e.printStackTrace();
     }
