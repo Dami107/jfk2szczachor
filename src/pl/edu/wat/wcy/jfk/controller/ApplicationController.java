@@ -260,10 +260,9 @@ public class ApplicationController {
       CtClass parentCtClass = classPool.get(parentClassString);
 
       childCtClass.setSuperclass(parentCtClass);
-      childCtClass.writeFile();
 
       Utils.showAlert(Alert.AlertType.INFORMATION, "Dokonano zmiany hierarchii dziedziczenia klasy " + childCtClass.getSimpleName() + ".");
-    } catch (IOException | CannotCompileException | NotFoundException e) {
+    } catch (CannotCompileException | NotFoundException e) {
       e.printStackTrace();
     }
   }
